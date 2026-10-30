@@ -18,36 +18,36 @@ This Analytics Hub integrates data from:
 - CSS3
 - JavaScript
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
-app/
-├── pages/
-│   ├── analytics/
-│   │   ├── financial-overview.html
-│   │   ├── branch-profitability.html
-│   │   ├── sales-trends.html
-│   │   ├── payment-audit.html
-│   │   └── wastage-insights.html
+Multi-Branch-Financial-Analytics-Audit-Hub/
+
+├── app/
+│   ├── pages/
+│   │   └── analytics/
+│   │       ├── financial-overview.html
+│   │       ├── branch-profitability.html
+│   │       ├── sales-trends.html
+│   │       ├── payment-audit.html
+│   │       └── wastage-insights.html
+│   │
+│   └── js/
+│       ├── financial-overview.js
+│       ├── branch-profitability.js
+│       ├── sales-trends.js
+│       ├── payment-audit.js
+│       └── wastage-insights.js
 │
-├── js/
-│   ├── analytics.js
-│   ├── branch-profitability.js
-│   ├── sales-trends.js
-│   ├── payment-audit.js
-│   └── wastage-insights.js
+├── routes/
+│   └── analytics-api.js
 │
-controllers/
-data/
-docs/
-lib/
-middleware/
-routes/
-├── analytics-api.js
+├── lib/
+│   ├── database.js
+│   └── commissary-db.js
 │
-README.md
-database.sqlite
-package.json
-schema.sql
-server.js
+├── README.md
+├── database.sqlite
+├── package.json
+└── server.js
 ```
