@@ -20,6 +20,7 @@ This Analytics Hub integrates data from:
 
 ## Project Structure
 
+```text
 app/
 ├── pages/
 │   ├── analytics/
