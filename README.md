@@ -1,3 +1,4 @@
+
 ## Requirements
 
 - Node.js and npm
@@ -96,3 +97,48 @@ To create a fresh local database, back up any data you need, then remove or move
 - `npm test` — not configured; the current script exits with an error.
 
 Stop the server with `Ctrl+C`. Browser code belongs in `app/`; server-side routes, controllers, middleware, and helpers belong in their respective root folders. Never commit credentials or real user or business data.
+
+# -Multi-Branch-Financial-Analytics-Audit-Hub
+Multi-Branch Financial Analytics &amp; Audit Hub for Tine's Kitchen Chick N Pastil featuring Financial Overview, Branch Profitability, Sales Trends, Payment Audit, and Wastage &amp; Operational Insights using data integrated from the POS and Central Commissary systems.
+
+## Data Sources
+
+This Analytics Hub integrates data from:
+
+- Branch POS System
+- Central Commissary & Procurement System
+
+## 📁 Project Structure
+
+```text
+Multi-Branch-Financial-Analytics-Audit-Hub/
+
+├── app/
+│   ├── pages/
+│   │   └── analytics/
+│   │       ├── financial-overview.html
+│   │       ├── branch-profitability.html
+│   │       ├── sales-trends.html
+│   │       ├── payment-audit.html
+│   │       └── wastage-insights.html
+│   │
+│   └── js/
+│       ├── financial-overview.js
+│       ├── branch-profitability.js
+│       ├── sales-trends.js
+│       ├── payment-audit.js
+│       └── wastage-insights.js
+│
+├── routes/
+│   └── analytics-api.js
+│
+├── lib/
+│   ├── database.js
+│   └── commissary-db.js
+│
+├── README.md
+├── TODO.md
+├── database.sqlite
+├── package.json
+└── server.js
+```
