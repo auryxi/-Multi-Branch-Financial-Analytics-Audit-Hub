@@ -1,0 +1,182 @@
+:root {
+  --sidebar-bg: #2d6238; /* Chick Pastil Green */
+  --sidebar-width: 230px;
+  --topbar-height: 70px;
+}
+
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* 1. TOPBAR: Highest Z-Index (1030) */
+.topbar {
+  height: var(--topbar-height);
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030; /* Highest priority */
+}
+
+.topbar-logo {
+  height: 70px;
+  object-fit: contain;
+}
+
+/* Layout Container */
+.app-container {
+  padding-top: var(--topbar-height);
+  min-height: 100vh;
+}
+
+/* 2. SIDEBAR: Fixed position, directly below Topbar, higher than main content (1020) */
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--sidebar-bg);
+  position: fixed;
+  top: var(--topbar-height);
+  left: 0;
+  bottom: 0;
+  height: calc(100vh - var(--topbar-height));
+  z-index: 1020; /* Below Topbar (1030), above Main Content (1) */
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2); /* Creates floating overlay effect */
+  transition: transform 0.3s ease;
+}
+
+/* Sidebar collapsed state (Slide left) */
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar-nav {
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: auto;
+  padding: 1.5rem 1rem;
+  list-style: none;
+  margin: 0;
+}
+
+.sidebar-nav .nav-item {
+  margin: 0 0 0.4rem;
+}
+
+.sidebar-nav .nav-link {
+  position: relative;
+  border-radius: 0.65rem;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-align: left;
+  padding: 0.7rem 0.85rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav .nav-link:hover,
+.sidebar-nav .nav-link.active,
+.sidebar-nav .nav-item.is-open > .nav-link {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+.sidebar-nav .nav-link:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.sidebar-nav .nav-item.has-subnav > .nav-link::after {
+  content: "";
+  flex: 0 0 0.45rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin: -0.2rem 0.15rem 0 0;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.sidebar-nav .nav-item.has-subnav.is-open > .nav-link::after {
+  margin-top: 0.2rem;
+  transform: rotate(225deg);
+}
+
+.sidebar-nav .subnav {
+  list-style: none;
+  margin: 0.3rem 0 0.65rem 0.75rem;
+  padding: 0.15rem 0 0.15rem 0.7rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-nav .subnav:not([hidden]) {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.sidebar-nav .subnav[hidden] {
+  display: none;
+}
+
+.sidebar-nav .subnav li {
+  margin: 0;
+}
+
+.sidebar-nav .subnav .nav-link {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.55rem 0.7rem;
+}
+
+.sidebar-nav .subnav .nav-link:hover,
+.sidebar-nav .subnav .nav-link.active {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Toggle Button */
+.sidebar-toggle-btn {
+  position: absolute;
+  right: -18px;
+  top: 400px;
+  width: 36px;
+  height: 36px;
+  background-color: #ad2727;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  border: none;
+  z-index: 1025;
+  color: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed .sidebar-toggle-btn {
+  right: -24px;
+  transform: rotate(180deg);
+}
+
+/* MAIN CONTENT: Takes full screen width, sitting directly underneath topbar & floating sidebar */
+.main-content {
+  margin-left: 0; /* Set to 0 so content extends to the left edge */
+  padding: 2rem;
+  width: 100%;
+}
+
+/* Adjust main content when sidebar is collapsed */
+.sidebar-wrapper:has(.sidebar.collapsed) + .main-content {
+  margin-left: 0;
+}

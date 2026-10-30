@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chick N Pastil</title>
+  
+  <!-- Bootstrap 5 CSS & Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+  
+  <!-- Custom Layout CSS -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body data-page-header="Inventory Manager">
+
+  <!-- Topbar Placeholder -->
+  <div id="topbar-wrapper"></div>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    <!-- Sidebar Placeholder -->
+    <div id="sidebar-wrapper"></div>
+
+    <!-- Main Page Content -->
+    <main class="main-content">
+      <div class="container-fluid py-4">
+        <div class="d-flex justify-content-end mb-3">
+          <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#addItemModal">
+            <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Add item
+          </button>
+        </div>
+
+        <div class="alert alert-danger d-none" id="inventoryError" role="alert"></div>
+        <section class="card border-0 shadow-sm mb-4" aria-labelledby="catalogHeading" style="background: linear-gradient(135deg, #f0fdf4, #ecfeff);">
+          <div class="card-header border-0 bg-transparent pt-3">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge rounded-pill bg-success-subtle text-success p-2"><i class="bi bi-clipboard-data" aria-hidden="true"></i></span>
+                <h1 class="h5 mb-0" id="catalogHeading">Inventory</h1>
+              </div>
+              <span class="small text-secondary" id="inventoryCount">Loading inventory…</span>
+            </div>
+            <div class="row g-2 pb-2">
+              <div class="col-12 col-md-8">
+                <label class="visually-hidden" for="inventorySearch">Search inventory</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white"><i class="bi bi-search" aria-hidden="true"></i></span>
+                  <input class="form-control" id="inventorySearch" type="search" placeholder="Search inventory items">
+                </div>
+              </div>
+              <div class="col-12 col-md-4">
+                <label class="visually-hidden" for="inventorySort">Sort inventory</label>
+                <select class="form-select" id="inventorySort">
+                  <option value="name">Item A to Z</option>
+                  <option value="quantity_asc">Quantity: low to high</option>
+                  <option value="quantity_desc">Quantity: high to low</option>
+                  <option value="cost_asc">Unit cost: low to high</option>
+                  <option value="cost_desc">Unit cost: high to low</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" class="ps-3">Item</th>
+                  <th scope="col">Stock</th>
+                  <th scope="col">Low threshold</th>
+                  <th scope="col">Restock target</th>
+                  <th scope="col">Unit cost</th>
+                  <th scope="col" class="text-end pe-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="inventoryRows"></tbody>
+            </table>
+          </div>
+          <div class="card-footer bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span class="small text-secondary" id="inventorySummary"></span>
+            <nav aria-label="Items database pages"><ul class="pagination pagination-sm mb-0" id="inventoryPagination"></ul></nav>
+          </div>
+        </section>
+
+        <section class="card border-0 shadow-sm mb-4" aria-labelledby="receivedLogHeading" style="background: linear-gradient(135deg, #eff6ff, #e0f2fe);">
+          <div class="card-header border-0 bg-transparent pt-3">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge rounded-pill bg-primary-subtle text-primary p-2"><i class="bi bi-box-seam" aria-hidden="true"></i></span>
+                <h2 class="h5 mb-0" id="receivedLogHeading">Received stock log</h2>
+              </div>
+              <span class="small text-secondary" id="receivedLogCount">Loading receipts…</span>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" class="ps-3">Received at</th>
+                  <th scope="col">Request</th>
+                  <th scope="col">Requested by</th>
+                  <th scope="col">Received by</th>
+                  <th scope="col">Items</th>
+                  <th scope="col" class="text-end pe-3">Details</th>
+                </tr>
+              </thead>
+              <tbody id="receivedLogRows"></tbody>
+            </table>
+          </div>
+          <div class="card-footer bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span class="small text-secondary" id="receivedLogSummary"></span>
+            <nav aria-label="Received stock log pages"><ul class="pagination pagination-sm mb-0" id="receivedLogPagination"></ul></nav>
+          </div>
+        </section>
+
+        <section class="card border-0 shadow-sm" aria-labelledby="logHeading" style="background: linear-gradient(135deg, #fff7ed, #fef3c7);">
+          <div class="card-header border-0 bg-transparent pt-3">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis p-2"><i class="bi bi-clock-history" aria-hidden="true"></i></span>
+                <h2 class="h5 mb-0" id="logHeading">Quantity update log</h2>
+              </div>
+              <span class="small text-secondary" id="inventoryLogCount">Loading updates…</span>
+            </div>
+            <div class="row g-2 pb-2">
+              <div class="col-12 col-md-8">
+                <label class="visually-hidden" for="inventoryLogSearch">Search quantity update log</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white"><i class="bi bi-search" aria-hidden="true"></i></span>
+                  <input class="form-control" id="inventoryLogSearch" type="search" placeholder="Search log">
+                </div>
+              </div>
+              <div class="col-12 col-md-4">
+                <label class="visually-hidden" for="inventoryLogSort">Sort log</label>
+                <select class="form-select" id="inventoryLogSort">
+                  <option value="desc">Newest first</option>
+                  <option value="asc">Oldest first</option>
+                  <option value="item">Item A to Z</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-sm table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr><th scope="col" class="ps-3">Date and time</th><th scope="col">Item</th><th scope="col">Updated by</th><th scope="col">Change</th><th scope="col">Reason</th></tr>
+              </thead>
+              <tbody id="inventoryLogRows"></tbody>
+            </table>
+          </div>
+          <div class="card-footer bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span class="small text-secondary" id="inventoryLogSummary"></span>
+            <nav aria-label="Quantity update log pages"><ul class="pagination pagination-sm mb-0" id="inventoryLogPagination"></ul></nav>
+          </div>
+        </section>
+      </div>
+    </main>
+
+  </div>
+
+  <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div><h2 class="modal-title fs-5" id="addItemModalTitle">Add item to branch</h2><p class="small text-secondary mb-0 mt-1">Select a catalog item and set its branch inventory values</p></div>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="addInventoryForm">
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-12"><label class="form-label" for="newInventoryCatalogItem">General stock item</label><select class="form-select" id="newInventoryCatalogItem" required><option value="">Select a catalog item</option></select></div>
+            <div class="col-6"><label class="form-label" for="newItemStock">Branch quantity</label><input class="form-control" id="newItemStock" type="number" min="0" step="0.01" value="0" required></div>
+            <div class="col-6"><label class="form-label" for="newItemThreshold">Low quantity threshold</label><input class="form-control" id="newItemThreshold" type="number" min="0" step="0.01" value="0" required></div>
+            <div class="col-12"><label class="form-label" for="newItemTarget">Restock target quantity</label><input class="form-control" id="newItemTarget" type="number" min="0" step="0.01" value="0" required></div>
+          </div>
+          <div class="small text-danger mt-3" data-modal-error role="alert"></div>
+        </div>
+        <div class="modal-footer"><button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-success" type="submit">Add to branch</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editBranchSpecsModal" tabindex="-1" aria-labelledby="editBranchSpecsModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div><h2 class="modal-title fs-5" id="editBranchSpecsModalTitle">Edit branch settings</h2><p class="small text-secondary mb-0 mt-1">Rice · sacks</p></div>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="branchSettingsForm">
+        <div class="modal-body">
+          <div class="mb-2"><label class="form-label" for="branchLowThreshold">Low-stock threshold</label><input class="form-control" id="branchLowThreshold" type="number" min="0" step="0.01" required></div>
+          <div><label class="form-label" for="branchRestockTarget">Restock target</label><input class="form-control" id="branchRestockTarget" type="number" min="0" step="0.01" required></div>
+          <div class="small text-danger mt-3" data-modal-error role="alert"></div>
+        </div>
+        <div class="modal-footer"><button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-success" type="submit">Save settings</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="updateStockModal" tabindex="-1" aria-labelledby="updateStockModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div><h2 class="modal-title fs-5" id="updateStockModalTitle">Update branch stock</h2><p class="small text-secondary mb-0 mt-1">Rice · sacks</p></div>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="updateStockForm">
+        <div class="modal-body">
+          <div class="mb-3"><label class="form-label" for="currentStock">Current quantity</label><input class="form-control" id="currentStock" value="18 sacks" readonly></div>
+          <div class="mb-3"><label class="form-label" for="updatedStock">New quantity on hand</label><input class="form-control" id="updatedStock" type="number" min="0" step="0.01" required></div>
+          <div>
+            <label class="form-label" for="stockUpdateReason">Reason for update</label>
+            <select class="form-select" id="stockUpdateReason">
+              <option>Delivery received</option>
+              <option>Emergency purchase</option>
+              <option>Offline sale</option>
+              <option>Physical count correction</option>
+              <option>Damaged or expired stock</option>
+              <option>Internal use</option>
+              <option>Stock transfer</option>
+              <option>Customer return</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="small text-danger mt-3" data-modal-error role="alert"></div>
+        </div>
+        <div class="modal-footer"><button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancel</button><button class="btn btn-success" type="submit">Update stock</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="receivedLogDetailsModal" tabindex="-1" aria-labelledby="receivedLogDetailsTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h2 class="modal-title fs-5" id="receivedLogDetailsTitle">Received stock details</h2>
+            <p class="small text-secondary mb-0 mt-1" id="receivedLogDetailsSubtitle"></p>
+          </div>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <dl class="row mb-3">
+            <dt class="col-sm-4">Requested by</dt><dd class="col-sm-8" id="receivedLogRequestedBy"></dd>
+            <dt class="col-sm-4">Requested at</dt><dd class="col-sm-8" id="receivedLogRequestedAt"></dd>
+            <dt class="col-sm-4">Received by</dt><dd class="col-sm-8" id="receivedLogReceivedBy"></dd>
+            <dt class="col-sm-4">Received at</dt><dd class="col-sm-8" id="receivedLogReceivedAt"></dd>
+            <dt class="col-sm-4">Request note</dt><dd class="col-sm-8 text-break" id="receivedLogRequestNote"></dd>
+            <dt class="col-sm-4">Preparation note</dt><dd class="col-sm-8 text-break" id="receivedLogPreparationNote"></dd>
+            <dt class="col-sm-4">Transit note</dt><dd class="col-sm-8 text-break" id="receivedLogTransitNote"></dd>
+            <dt class="col-sm-4">Receiving notes</dt><dd class="col-sm-8 text-break" id="receivedLogNote"></dd>
+          </dl>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Item</th>
+                  <th scope="col">Unit</th>
+                  <th scope="col" class="text-end">Requested</th>
+                  <th scope="col" class="text-end">Received</th>
+                  <th scope="col" class="text-end">Lost / damaged</th>
+                </tr>
+              </thead>
+              <tbody id="receivedLogDetailsItems"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bars Loader Script -->
+  <script src="../../js/shared/bars.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../js/supply/inventory.js"></script>
+</body>
+</html>
