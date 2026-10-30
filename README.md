@@ -8,16 +8,6 @@ This Analytics Hub integrates data from:
 - Branch POS System
 - Central Commissary & Procurement System
 
-- ## Technologies Used
-
-- Node.js
-- Express.js
-- SQLite
-- Chart.js
-- HTML5
-- CSS3
-- JavaScript
-
 ## 📁 Project Structure
 
 ```text
