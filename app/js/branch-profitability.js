@@ -106,7 +106,7 @@ function createCharts(data) {
                     label: 'Profit Margin %',
 
                     data: data.branches.map(
-                        branch => 100
+                        branch => branch.margin
                     ),
 
                     backgroundColor: '#133d2a'

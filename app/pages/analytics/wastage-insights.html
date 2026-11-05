@@ -6,195 +6,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wastage & Operational Insights</title>
 
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Shared Layout -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- Analytics Styles -->
     <link rel="stylesheet" href="/assets/analytics.css">
 </head>
 
-<body>
+<body data-page-header="Wastage & Operational Insights">
 
-    <div class="container">
+    <!-- Topbar -->
+    <div id="topbar-wrapper"></div>
 
-        <aside class="sidebar">
+    <div class="app-container">
 
-            <div class="logo">
-                <h2>CHICK N PASTIL</h2>
-                <p>TINE'S KITCHEN</p>
-            </div>
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper"></div>
 
-            <nav>
-
-                <a href="/analytics/financial-overview">
-                    Financial Overview
-                </a>
-
-                <a href="/analytics/branch-profitability">
-                    Branch Profitability
-                </a>
-
-                <a href="/analytics/sales-trends">
-                    Sales Trends
-                </a>
-
-                <a href="/analytics/payment-audit">
-                    Payment Audit
-                </a>
-
-                <a class="active">
-                    Wastage & Insights
-                </a>
-
-            </nav>
-
-        </aside>
-
+        <!-- Main Content -->
         <main class="main-content">
 
-            <header class="topbar">
+            <div class="container-fluid py-4">
 
-                <div class="page-tag">
-                    Wastage & Insights
-                </div>
-
-                <div class="profile">
-
-                    <div>
-                        <strong>Francis Pablo</strong>
-                        <p>Operations Manager</p>
-                    </div>
-
-                    <div class="avatar"></div>
-
-                </div>
-
-            </header>
-
-            <section class="dashboard-header">
-
-                <div>
-
-                    <h1>Wastage & Operational Insights</h1>
+                <!-- Header -->
+                <section class="dashboard-header">
 
                     <p>
                         Monitoring loss and turning it into business recommendations
                     </p>
 
-                </div>
+                    <div class="filters">
 
-                <div class="filters">
+                        <input type="date">
 
-                    <input type="date">
+                        <select>
+                            <option>All Branches</option>
+                            <option>Balagtas</option>
+                            <option>Borol</option>
+                            <option>Bullihan Centro</option>
+                            <option>Pandi</option>
+                            <option>Northville 6</option>
+                            <option>Santol</option>
+                            <option>Pulong Gubat</option>
+                        </select>
 
-                    <select>
-                        <option>All Branches</option>
-                        <option>Balagtas</option>
-                        <option>Borol</option>
-                        <option>Bullihan Centro</option>
-                        <option>Pandi</option>
-                        <option>Northville 6</option>
-                        <option>Santol</option>
-                        <option>Pulong Gubat</option>
-                    </select>
-
-                </div>
-
-            </section>
-
-            <section class="cards">
-
-                <div class="card">
-                    <h3>TOTAL WASTAGE COST</h3>
-                    <div class="card-value" id="totalCost">
-                        ₱0
                     </div>
-                </div>
 
-                <div class="card">
-                    <h3>HIGHEST WASTAGE BRANCH</h3>
-                    <div class="card-value" id="topBranch">
-                        -
+                </section>
+
+                <!-- Cards -->
+                <section class="cards">
+
+                    <div class="card">
+                        <h3>TOTAL WASTAGE COST</h3>
+                        <div class="card-value" id="totalCost">
+                            ₱0
+                        </div>
                     </div>
-                    <span class="positive" id="topBranchCost">₱0</span>
-                </div>
 
-                <div class="card">
-                    <h3>BRANCHES REQUIRING ATTENTION</h3>
-                    <div class="card-value" id="incidents">
-                        0
+                    <div class="card">
+                        <h3>HIGHEST WASTAGE BRANCH</h3>
+                        <div class="card-value" id="topBranch">
+                            -
+                        </div>
+                        <span class="positive" id="topBranchCost">
+                            ₱0
+                        </span>
                     </div>
-                </div>
 
-                <div class="card">
-                    <h3>ESTIMATED PROFIT IMPACT</h3>
-                    <div class="card-value" id="profitImpact">
-                        ₱0
+                    <div class="card">
+                        <h3>BRANCHES REQUIRING ATTENTION</h3>
+                        <div class="card-value" id="incidents">
+                            0
+                        </div>
                     </div>
-                    <span class="negative">
-                        5.3% of 7-day profit
-                    </span>
-                </div>
 
-            </section>
+                    <div class="card">
+                        <h3>ESTIMATED PROFIT IMPACT</h3>
+                        <div class="card-value" id="profitImpact">
+                            ₱0
+                        </div>
+                        <span class="negative">
+                            5.3% of 7-day profit
+                        </span>
+                    </div>
 
-            <section class="summary">
+                </section>
 
-                <h2>Wastage Trend - Last 4 Weeks</h2>
+                <!-- Trend Chart -->
+                <section class="summary">
 
-                <canvas id="wastageTrendChart"></canvas>
+                    <h2>Wastage Trend - Last 4 Weeks</h2>
 
-            </section>
+                    <canvas id="wastageTrendChart"></canvas>
 
-            <section class="charts">
+                </section>
 
-                <div class="chart-box">
+                <!-- Charts -->
+                <section class="charts">
 
-                    <h2>Wastage Cost by Branch</h2>
+                    <div class="chart-box">
+                        <h2>Wastage Cost by Branch</h2>
+                        <div id="wastageBranchBars"></div>
+                    </div>
 
-                    <div id="wastageBranchBars"></div>
+                    <div class="chart-box">
+                        <h2>Profit Impact Analysis</h2>
+                        <div id="profitImpactBars"></div>
+                    </div>
 
-                </div>
+                </section>
 
-                <div class="chart-box">
+                <!-- Details Table -->
+                <section class="summary">
 
-                    <h2>Profit Impact Analysis</h2>
+                    <h2>Wastage Detail by Branch</h2>
 
-                    <div id="profitImpactBars"></div>
+                    <table class="branch-table">
 
-                </div>
+                        <thead>
+                            <tr>
+                                <th>Branch</th>
+                                <th>Wastage Cost</th>
+                                <th>Profit Impact</th>
+                                <th>Issue Identified</th>
+                                <th>Recommended Action</th>
+                            </tr>
+                        </thead>
 
-            </section>
+                        <tbody id="branchInsightsBody">
+                        </tbody>
 
-            <!-- NEW SECTION -->
+                    </table>
 
-            <section class="summary">
+                </section>
 
-                <h2>Wastage Detail by Branch</h2>
-
-                <table class="branch-table">
-
-                    <thead>
-
-                        <tr>
-                            <th>Branch</th>
-                            <th>Wastage Cost</th>
-                            <th>Profit Impact</th>
-                            <th>Issue Identified</th>
-                            <th>Recommended Action</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="branchInsightsBody">
-
-                    </tbody>
-
-                </table>
-
-            </section>
+            </div>
 
         </main>
 
     </div>
 
+    <!-- Shared Layout -->
+    <script src="/js/shared/bars.js"></script>
+
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Page Script -->
     <script src="/js/wastage-insights.js"></script>
 
 </body>
