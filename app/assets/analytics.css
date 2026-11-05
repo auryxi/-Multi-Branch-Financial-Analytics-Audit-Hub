@@ -9,7 +9,6 @@ body{
     background:#f8f9fa;
 }
 
-/* Header */
 
 .dashboard-header{
     display:flex;
@@ -25,7 +24,6 @@ body{
     margin:0;
 }
 
-/* Filters */
 
 .filters{
     display:flex;
@@ -40,7 +38,6 @@ body{
     background:#fff;
 }
 
-/* Cards */
 
 .cards{
     display:grid;
@@ -78,7 +75,6 @@ body{
     color:#e74c3c;
 }
 
-/* Charts */
 
 .charts{
     display:grid;
@@ -100,7 +96,6 @@ body{
     margin-bottom:16px;
 }
 
-/* Summary */
 
 .summary{
     background:#fff;
@@ -110,7 +105,6 @@ body{
     box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
 
-/* Tables */
 
 .branch-table{
     width:100%;
@@ -129,7 +123,6 @@ body{
     border-bottom:1px solid #eee;
 }
 
-/* Chart sizing */
 
 #paymentChart{
     display:block;
